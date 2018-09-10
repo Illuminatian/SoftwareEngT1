@@ -10,16 +10,41 @@ namespace SoftwareEngT1.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ScheduleContext _context;
+
+        public HomeController(ScheduleContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Scheduler()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "The Scheduler Page";
+            var model = new List<Schedule>();
 
-            return View();
+            using(var db = _context)
+            {
+                foreach(var schedule in db.Schedules)
+                {
+                    var toAdd = new Schedule();
+                    toAdd.AppointmentTime = schedule.AppointmentTime;
+                    toAdd.AppointmentDate = schedule.AppointmentDate;
+
+                    toAdd.AppointmentType = schedule.AppointmentType;
+                    toAdd.FirstName = schedule.FirstName;
+                    toAdd.LastName = schedule.LastName;
+                    toAdd.PhoneNumber = schedule.PhoneNumber;
+                    toAdd.EmailAddress = schedule.EmailAddress;
+
+                    model.Add(toAdd);
+                }
+            }
+
+            return View(model);
         }
 
         public IActionResult Contact()
