@@ -8,6 +8,10 @@
 
 <p>Here is my scheduler!</p>
 
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
 <div class="table">
 <table class="table">
     <thead>
@@ -45,6 +49,12 @@
             </td>
             <td>
                 @item.AppointmentType
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
         }
